@@ -1,0 +1,3222 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King Hous Travel - Найкращі тури</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a0a0a;
+            --secondary: #d4af37;
+            --light: #ffffff;
+            --dark: #333333;
+            --gray: #f5f5f5;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Навігація */
+        nav {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 1.5rem;
+            color: var(--light);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--light);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Перемикач мов */
+        .language-switcher {
+            display: flex;
+            gap: 5px;
+            margin-left: 20px;
+        }
+
+        .language-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--secondary);
+            background-color: transparent;
+            color: var(--light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .language-btn:hover, .language-btn.active {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Кнопка музики */
+        .music-control {
+            margin-left: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--secondary);
+            background-color: transparent;
+            color: var(--light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .music-control:hover, .music-control.active {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Герой секція */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light);
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 30px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: var(--light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.secondary {
+            background-color: transparent;
+            color: var(--light);
+            border: 2px solid var(--secondary);
+        }
+
+        .cta-button.secondary:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Статистика */
+        .stats {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--light);
+        }
+
+        /* Секції */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+        }
+
+        .section-description {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        /* Послуги */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray);
+            font-size: 3rem;
+            color: var(--secondary);
+        }
+
+        .service-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .service-card p {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            flex-grow: 1;
+        }
+
+        /* Тури */
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tour-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .tour-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .tour-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .tour-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tour-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .tour-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .tour-location i {
+            color: var(--secondary);
+        }
+
+        .tour-description {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            flex-grow: 1;
+        }
+
+        .tour-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tour-duration, .tour-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--dark);
+        }
+
+        .tour-duration i, .tour-group i {
+            color: var(--secondary);
+        }
+
+        .tour-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tour-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .tour-button {
+            padding: 8px 15px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tour-button:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Клієнти */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .client-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .client-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .client-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .client-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+            color: var(--primary);
+        }
+
+        .client-info p {
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .client-rating {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .client-rating i {
+            color: var(--secondary);
+        }
+
+        .client-testimonial {
+            color: var(--dark);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* Блог */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .blog-date i {
+            color: var(--secondary);
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .blog-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .blog-link:hover {
+            gap: 10px;
+        }
+
+        /* Контакти */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            background-color: var(--gray);
+            padding: 2rem;
+            border-radius: 10px;
+            height: 100%;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .contact-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .contact-text p {
+            color: var(--dark);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .contact-form {
+            background-color: var(--light);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-button {
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .form-button:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Футер */
+        footer {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 70px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo .logo {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .footer-logo-text {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Корзина */
+        .cart-container {
+            position: fixed;
+            top: 80px;
+            right: -400px;
+            width: 350px;
+            height: calc(100vh - 80px);
+            background-color: var(--light);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-container.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 5px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .cart-item-price {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--dark);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .cart-item-remove:hover {
+            color: #e74c3c;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--dark);
+        }
+
+        .cart-empty i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .cart-total span {
+            color: var(--secondary);
+        }
+
+        .cart-checkout {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cart-checkout:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Модальне вікно оплати */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .payment-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .payment-container {
+            background-color: var(--light);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .payment-modal.active .payment-container {
+            transform: scale(1);
+        }
+
+        .payment-header {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payment-header h3 {
+            font-size: 1.5rem;
+        }
+
+        .payment-close {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .payment-body {
+            padding: 2rem;
+        }
+
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .payment-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .payment-form-group label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .payment-form-group input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .payment-form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .payment-form-group.half {
+            flex: 1;
+        }
+
+        .card-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 0.5rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 25px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .payment-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payment-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .payment-total span {
+            color: var(--secondary);
+        }
+
+        .payment-button {
+            padding: 12px 30px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-button:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Сповіщення */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: var(--light);
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-left: 4px solid #2ecc71;
+        }
+
+        .notification.error {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .notification.info {
+            border-left: 4px solid #3498db;
+        }
+
+        .notification-icon {
+            font-size: 1.2rem;
+        }
+
+        .notification.success .notification-icon {
+            color: #2ecc71;
+        }
+
+        .notification.error .notification-icon {
+            color: #e74c3c;
+        }
+
+        .notification.info .notification-icon {
+            color: #3498db;
+        }
+
+        .notification-message {
+            flex-grow: 1;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Адаптивність для планшетів */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid,
+            .tours-grid,
+            .clients-grid,
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
+            }
+        }
+
+        /* Адаптивність для мобільних пристроїв */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                padding: 1.5rem 0;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+            }
+            
+            .mobile-menu.active {
+                transform: translateY(0);
+            }
+            
+            .mobile-menu ul {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .mobile-menu a {
+                color: var(--light);
+                text-decoration: none;
+                font-size: 1.1rem;
+                font-weight: 500;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+                line-height: 1.3;
+                margin-bottom: 1.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 1.5rem;
+                bottom: 30px;
+            }
+            
+            .services-grid,
+            .tours-grid,
+            .clients-grid,
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .service-card,
+            .tour-card,
+            .client-card,
+            .blog-card {
+                padding: 1.5rem;
+            }
+            
+            .tour-image {
+                height: 180px;
+            }
+            
+            .contact-info,
+            .contact-form {
+                padding: 1.5rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .cart-container {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .payment-container {
+                width: 95%;
+            }
+        }
+
+        /* Адаптивність для дуже малих екранів */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 0.95rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-description {
+                font-size: 1rem;
+            }
+            
+            .service-card,
+            .tour-card,
+            .client-card,
+            .blog-card {
+                padding: 1.2rem;
+            }
+            
+            .contact-info,
+            .contact-form {
+                padding: 1.2rem;
+            }
+            
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 0.8rem;
+            }
+            
+            .payment-form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навігація -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <div class="logo">KH</div>
+                    <a href="#" class="logo-text">King Hous Travel</a>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#home" data-translate="nav_home">Головна</a></li>
+                    <li><a href="#services" data-translate="nav_services">Послуги</a></li>
+                    <li><a href="#tours" data-translate="nav_tours">Тури</a></li>
+                    <li><a href="#clients" data-translate="nav_clients">Відгуки</a></li>
+                    <li><a href="#blog" data-translate="nav_blog">Блог</a></li>
+                    <li><a href="#contact" data-translate="nav_contact">Контакти</a></li>
+                </ul>
+                
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <!-- Перемикач мов -->
+                <div class="language-switcher">
+                    <button class="language-btn active" data-lang="uk">UA</button>
+                    <button class="language-btn" data-lang="en">EN</button>
+                    <button class="language-btn" data-lang="de">DE</button>
+                    <button class="language-btn" data-lang="it">IT</button>
+                    <button class="language-btn" data-lang="cz">CZ</button>
+                </div>
+                
+                <!-- Кнопка музики -->
+                <button class="music-control" id="music-control">
+                    <i class="fas fa-music"></i>
+                </button>
+                
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Мобільне меню -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a href="#home" data-translate="nav_home">Головна</a></li>
+                <li><a href="#services" data-translate="nav_services">Послуги</a></li>
+                <li><a href="#tours" data-translate="nav_tours">Тури</a></li>
+                <li><a href="#clients" data-translate="nav_clients">Відгуки</a></li>
+                <li><a href="#blog" data-translate="nav_blog">Блог</a></li>
+                <li><a href="#contact" data-translate="nav_contact">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Герой секція -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 data-translate="hero_title">Відкрийте для себе світ разом з нами</h1>
+            <p data-translate="hero_subtitle">Незабутні подорожі, ексклюзивні тури та професійний сервіс для вашого ідеального відпочинку</p>
+            <div class="hero-buttons">
+                <a href="#tours" class="cta-button" data-translate="hero_button1">Переглянути тури <i class="fas fa-arrow-right"></i></a>
+                <a href="#contact" class="cta-button secondary" data-translate="hero_button2">Зв'язатися з нами <i class="fas fa-phone"></i></a>
+            </div>
+        </div>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label" data-translate="stat_tours">Турів</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label" data-translate="stat_countries">Країн</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10000+</div>
+                <div class="stat-label" data-translate="stat_clients">Клієнтів</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15</div>
+                <div class="stat-label" data-translate="stat_experience">Років досвіду</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Послуги -->
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title" data-translate="services_title">Наші послуги</h2>
+            <p class="section-description" data-translate="services_subtitle">Ми пропонуємо повний спектр туристичних послуг для вашого комфорту та задоволення</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 data-translate="service1_title">Індивідуальні тури</h3>
+                        <p data-translate="service1_desc">Створимо для вас унікальний маршрут відповідно до ваших побажань та інтересів. Індивідуальний підхід до кожного клієнта.</p>
+                        <a href="#" class="cta-button secondary" data-translate="service1_button">Детальніше <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 data-translate="service2_title">Бронювання готелів</h3>
+                        <p data-translate="service2_desc">Підберемо найкращі варіанти проживання будь-якого рівня комфорту. Співпрацюємо лише з перевіреними готелями та резортами.</p>
+                        <a href="#" class="cta-button secondary" data-translate="service2_button">Детальніше <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 data-translate="service3_title">Авіаквитки</h3>
+                        <p data-translate="service3_desc">Забронюємо авіаквитки за найвигіднішими цінами від надійних авіакомпаній. Допоможемо з вибором оптимального маршруту.</p>
+                        <a href="#" class="cta-button secondary" data-translate="service3_button">Детальніше <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 data-translate="service4_title">Візова підтримка</h3>
+                        <p data-translate="service4_desc">Допоможемо з оформленням віз та необхідних документів для подорожі. Повний супровід на всіх етапах.</p>
+                        <a href="#" class="cta-button secondary" data-translate="service4_button">Детальніше <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 data-translate="service5_title">Організація відпочинку</h3>
+                        <p data-translate="service5_desc">Організуємо повний пакет послуг для вашого відпочинку: екскурсії, розваги, трансфери та інше для максимального комфорту.</p>
+                        <a href="#" class="cta-button secondary" data-translate="service5_button">Детальніше <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 data-translate="service6_title">Страхування</h3>
+                        <p data-translate="service6_desc">Запропонуємо найкращі варіанти туристичного страхування для вашої безпеки під час подорожі. Покриття будь-яких ризиків.</p>
+                        <a href="#" class="cta-button secondary" data-translate="service6_button">Детальніше <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Тури -->
+    <section id="tours">
+        <div class="container">
+            <h2 class="section-title" data-translate="tours_title">Популярні тури</h2>
+            <p class="section-description" data-translate="tours_subtitle">Оберіть тур мрії з нашої колекції найкращих пропозицій</p>
+            <div class="tours-grid">
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')">
+                        <div class="tour-badge" data-translate="tour1_badge">Популярний</div>
+                    </div>
+                    <div class="tour-content">
+                        <h3 class="tour-title" data-translate="tour1_title">Романтична Париж</h3>
+                        <div class="tour-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-translate="tour1_location">Франція, Париж</span>
+                        </div>
+                        <p class="tour-description" data-translate="tour1_desc">Незабутній вікенд у місті кохання. Відвідайте Ейфелеву вежу, Лувр, прогуляйтеся Монмартром та насолоджуйтеся французькою кухнею.</p>
+                        <div class="tour-details">
+                            <div class="tour-duration">
+                                <i class="fas fa-clock"></i>
+                                <span data-translate="tour1_duration">3 дні / 2 ночі</span>
+                            </div>
+                            <div class="tour-group">
+                                <i class="fas fa-users"></i>
+                                <span data-translate="tour1_group">2-4 особи</span>
+                            </div>
+                        </div>
+                        <div class="tour-footer">
+                            <div class="tour-price">12 500 грн</div>
+                            <button class="tour-button add-to-cart" data-tour-id="1" data-tour-name="Романтична Париж" data-tour-price="12500" data-translate="add_to_cart">Додати</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1543429776-2782fcdfa3da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')">
+                        <div class="tour-badge" data-translate="tour2_badge">Хіт</div>
+                    </div>
+                    <div class="tour-content">
+                        <h3 class="tour-title" data-translate="tour2_title">Тропічний раєм</h3>
+                        <div class="tour-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-translate="tour2_location">Мальдіви</span>
+                        </div>
+                        <p class="tour-description" data-translate="tour2_desc">Розкішний відпочинок на білосніжних пляжах Мальдівів. Вілли над водою, дайвінг, спа-процедури та неймовірні заходи сонця.</p>
+                        <div class="tour-details">
+                            <div class="tour-duration">
+                                <i class="fas fa-clock"></i>
+                                <span data-translate="tour2_duration">7 днів / 6 ночей</span>
+                            </div>
+                            <div class="tour-group">
+                                <i class="fas fa-users"></i>
+                                <span data-translate="tour2_group">2 особи</span>
+                            </div>
+                        </div>
+                        <div class="tour-footer">
+                            <div class="tour-price">45 000 грн</div>
+                            <button class="tour-button add-to-cart" data-tour-id="2" data-tour-name="Тропічний раєм" data-tour-price="45000" data-translate="add_to_cart">Додати</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')">
+                        <div class="tour-badge" data-translate="tour3_badge">Рекомендовано</div>
+                    </div>
+                    <div class="tour-content">
+                        <h3 class="tour-title" data-translate="tour3_title">Східні казки</h3>
+                        <div class="tour-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-translate="tour3_location">ОАЕ, Дубай</span>
+                        </div>
+                        <p class="tour-description" data-translate="tour3_desc">Неймовірне поєднання сучасності та традицій. Хмарочоси, розкішні торгові центри, пустельні сафарі та ексклюзивний шопінг.</p>
+                        <div class="tour-details">
+                            <div class="tour-duration">
+                                <i class="fas fa-clock"></i>
+                                <span data-translate="tour3_duration">5 днів / 4 ночі</span>
+                            </div>
+                            <div class="tour-group">
+                                <i class="fas fa-users"></i>
+                                <span data-translate="tour3_group">2-6 осіб</span>
+                            </div>
+                        </div>
+                        <div class="tour-footer">
+                            <div class="tour-price">18 700 грн</div>
+                            <button class="tour-button add-to-cart" data-tour-id="3" data-tour-name="Східні казки" data-tour-price="18700" data-translate="add_to_cart">Додати</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')">
+                        <div class="tour-badge" data-translate="tour4_badge">Відпочинок</div>
+                    </div>
+                    <div class="tour-content">
+                        <h3 class="tour-title" data-translate="tour4_title">Кришталеві води</h3>
+                        <div class="tour-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-translate="tour4_location">Таїланд</span>
+                        </div>
+                        <p class="tour-description" data-translate="tour4_desc">Екзотичний відпочинок на островах Таїланду. Бангкок, Пхукет, Самуї - найкращі пляжі, тайський масаж та незабутня кухня.</p>
+                        <div class="tour-details">
+                            <div class="tour-duration">
+                                <i class="fas fa-clock"></i>
+                                <span data-translate="tour4_duration">10 днів / 9 ночей</span>
+                            </div>
+                            <div class="tour-group">
+                                <i class="fas fa-users"></i>
+                                <span data-translate="tour4_group">2-4 особи</span>
+                            </div>
+                        </div>
+                        <div class="tour-footer">
+                            <div class="tour-price">22 300 грн</div>
+                            <button class="tour-button add-to-cart" data-tour-id="4" data-tour-name="Кришталеві води" data-tour-price="22300" data-translate="add_to_cart">Додати</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')">
+                        <div class="tour-badge" data-translate="tour5_badge">Природа</div>
+                    </div>
+                    <div class="tour-content">
+                        <h3 class="tour-title" data-translate="tour5_title">Альпійська пригода</h3>
+                        <div class="tour-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-translate="tour5_location">Швейцарія</span>
+                        </div>
+                        <p class="tour-description" data-translate="tour5_desc">Неймовірні гірські пейзажі, чисте повітря та гірськолижні курорти. Цюрих, Женева, інтерлакен та підйом на Маттерхорн.</p>
+                        <div class="tour-details">
+                            <div class="tour-duration">
+                                <i class="fas fa-clock"></i>
+                                <span data-translate="tour5_duration">8 днів / 7 ночей</span>
+                            </div>
+                            <div class="tour-group">
+                                <i class="fas fa-users"></i>
+                                <span data-translate="tour5_group">2-6 осіб</span>
+                            </div>
+                        </div>
+                        <div class="tour-footer">
+                            <div class="tour-price">28 500 грн</div>
+                            <button class="tour-button add-to-cart" data-tour-id="5" data-tour-name="Альпійська пригода" data-tour-price="28500" data-translate="add_to_cart">Додати</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1519451243450-1a7c1a6b8a9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')">
+                        <div class="tour-badge" data-translate="tour6_badge">Культура</div>
+                    </div>
+                    <div class="tour-content">
+                        <h3 class="tour-title" data-translate="tour6_title">Стародавній світ</h3>
+                        <div class="tour-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-translate="tour6_location">Італія, Рим</span>
+                        </div>
+                        <p class="tour-description" data-translate="tour6_desc">Подорож до серця імперії. Колізей, Ватикан, фонтан Треві, Сикстинська капела та найкраща італійська кухня.</p>
+                        <div class="tour-details">
+                            <div class="tour-duration">
+                                <i class="fas fa-clock"></i>
+                                <span data-translate="tour6_duration">6 днів / 5 ночей</span>
+                            </div>
+                            <div class="tour-group">
+                                <i class="fas fa-users"></i>
+                                <span data-translate="tour6_group">2-8 осіб</span>
+                            </div>
+                        </div>
+                        <div class="tour-footer">
+                            <div class="tour-price">16 800 грн</div>
+                            <button class="tour-button add-to-cart" data-tour-id="6" data-tour-name="Стародавній світ" data-tour-price="16800" data-translate="add_to_cart">Додати</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Відгуки клієнтів -->
+    <section id="clients">
+        <div class="container">
+            <h2 class="section-title" data-translate="clients_title">Відгуки клієнтів</h2>
+            <p class="section-description" data-translate="clients_subtitle">Дізнайтеся, що говорять про нас наші задоволені клієнти</p>
+            <div class="clients-grid">
+                <div class="client-card">
+                    <div class="client-header">
+                        <div class="client-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="client-info">
+                            <h4>Олена Коваль</h4>
+                            <p data-translate="client1_tour">Подорож до Парижу</p>
+                        </div>
+                    </div>
+                    <div class="client-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="client-testimonial" data-translate="client1_review">"Неймовірно організована подорож! Все було продумано до дрібниць: готель просто чудовий, екскурсії дуже цікаві, а гід - справжній професіонал. Обов'язково звернуся знову!"</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-header">
+                        <div class="client-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="client-info">
+                            <h4>Андрій Петренко</h4>
+                            <p data-translate="client2_tour">Відпочинок на Мальдівах</p>
+                        </div>
+                    </div>
+                    <div class="client-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="client-testimonial" data-translate="client2_review">"Мріяв про відпочинок на Мальдівах і King Hous Travel втілили мою мрію в життя! Вілла над водою, неймовірні види, ідеальний сервіс. Це був найкращий відпочинок у моєму житті!"</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-header">
+                        <div class="client-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="client-info">
+                            <h4>Ірина Сидоренко</h4>
+                            <p data-translate="client3_tour">Подорож до Таїланду</p>
+                        </div>
+                    </div>
+                    <div class="client-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="client-testimonial" data-translate="client3_review">"Дуже дякую за чудову організацію туру! Все було на найвищому рівні: переліт, трансфери, готелі, екскурсії. Особливо сподобалося спілкування з місцевими гідами, які розповіли багато цікавого."</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-header">
+                        <div class="client-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="client-info">
+                            <h4>Максим Ткаченко</h4>
+                            <p data-translate="client4_tour">Поїздка до Дубаю</p>
+                        </div>
+                    </div>
+                    <div class="client-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="client-testimonial" data-translate="client4_review">"Дубай перевершив усі мої очікування! Величезне дякую команді King Hous Travel за професійний підхід. Хотілося б більше вільного часу, але в цілому все було чудово!"</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-header">
+                        <div class="client-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="client-info">
+                            <h4>Наталія Мороз</h4>
+                            <p data-translate="client5_tour">Тур по Швейцарії</p>
+                        </div>
+                    </div>
+                    <div class="client-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="client-testimonial" data-translate="client5_review">"Швейцарія - це казка! Дякую за ідеально спланований маршрут. Гори, озера, чисті міста - все було неймовірно. Особливо запам'ятався підйом на Маттерхорн - це щось неймовірне!"</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-header">
+                        <div class="client-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="client-info">
+                            <h4>Сергій Козак</h4>
+                            <p data-translate="client6_tour">Подорож до Італії</p>
+                        </div>
+                    </div>
+                    <div class="client-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="client-testimonial" data-translate="client6_review">"Рим вразив мене своєю історією та архітектурою! Дякую King Hous Travel за чудову організацію туру. Екскурсії були дуже пізнавальними, а гід - справжній знавець історії. Обов'язково повернуся!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блог -->
+    <section id="blog">
+        <div class="container">
+            <h2 class="section-title" data-translate="blog_title">Наш блог</h2>
+            <p class="section-description" data-translate="blog_subtitle">Корисні поради, цікаві історії та новини світу подорожей</p>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')"></div>
+                    <div class="blog-content">
+                        <div class="blog-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>15 червня 2023</span>
+                        </div>
+                        <h3 class="blog-title" data-translate="blog1_title">Топ-10 місць для відвідування в Європі цього літа</h3>
+                        <p class="blog-excerpt" data-translate="blog1_desc">Літо - ідеальний час для подорожей Європою. У нашій статті ми зібрали найкращі місця, які варто відвідати цього сезону: від мальовничих берегів Середземномор'я до гірських вершин Альп...</p>
+                        <a href="#" class="blog-link" data-translate="blog_read_more">Читати далі <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')"></div>
+                    <div class="blog-content">
+                        <div class="blog-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>2 червня 2023</span>
+                        </div>
+                        <h3 class="blog-title" data-translate="blog2_title">Як спакувати валізу для ідеальної подорожі</h3>
+                        <p class="blog-excerpt" data-translate="blog2_desc">Правильне пакування - запорука комфортної подорожі. У нашому гайді ми поділимося секретами, як зібрати валізу ефективно, взявши з собою все необхідне і не перевантаживши себе...</p>
+                        <a href="#" class="blog-link" data-translate="blog_read_more">Читати далі <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')"></div>
+                    <div class="blog-content">
+                        <div class="blog-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>20 травня 2023</span>
+                        </div>
+                        <h3 class="blog-title" data-translate="blog3_title">Найкращі пляжі світу для вашого відпочинку</h3>
+                        <p class="blog-excerpt" data-translate="blog3_desc">Мрієте про ідеальний пляжний відпочинок? Ми підготували для вас добірку найкрасивіших пляжів світу: від білосніжних берегів Мальдівів до екзотичних узбережжів Карибського моря...</p>
+                        <a href="#" class="blog-link" data-translate="blog_read_more">Читати далі <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакти -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title" data-translate="contact_title">Зв'яжіться з нами</h2>
+            <p class="section-description" data-translate="contact_subtitle">Ми завжди раді відповісти на ваші запитання та допомогти з організацією подорожі</p>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 data-translate="contact_info_title">Контактна інформація</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4 data-translate="contact_address">Адреса</h4>
+                            <p>вул. Хрещатик, 25, Київ, 01001</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4 data-translate="contact_phone">Телефон</h4>
+                            <p>+38 (044) 123-45-67</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4 data-translate="contact_email">Email</h4>
+                            <p>info@kinghoustravel.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4 data-translate="contact_hours">Графік роботи</h4>
+                            <p data-translate="contact_schedule">Пн-Пт: 9:00 - 18:00<br>Сб: 10:00 - 15:00</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3 data-translate="contact_form_title">Надішліть нам повідомлення</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name" data-translate="form_name">Ваше ім'я</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-translate="form_email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" data-translate="form_subject">Тема</label>
+                            <select id="subject" name="subject" required>
+                                <option value="" data-translate="form_subject_placeholder">Оберіть тему</option>
+                                <option value="booking" data-translate="form_subject_booking">Бронювання туру</option>
+                                <option value="information" data-translate="form_subject_info">Інформація про тури</option>
+                                <option value="cooperation" data-translate="form_subject_cooperation">Співпраця</option>
+                                <option value="other" data-translate="form_subject_other">Інше</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-translate="form_message">Повідомлення</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="form-button" data-translate="form_submit">Надіслати повідомлення</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <div class="logo">KH</div>
+                        <a href="#" class="footer-logo-text">King Hous Travel</a>
+                    </div>
+                    <p data-translate="footer_about">Найкращі тури та незабутні подорожі для вас. Ми робимо ваші мрії реальністю з 2008 року.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 data-translate="footer_links_title">Швидкі посилання</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" data-translate="nav_home">Головна</a></li>
+                        <li><a href="#services" data-translate="nav_services">Послуги</a></li>
+                        <li><a href="#tours" data-translate="nav_tours">Тури</a></li>
+                        <li><a href="#clients" data-translate="nav_clients">Відгуки</a></li>
+                        <li><a href="#blog" data-translate="nav_blog">Блог</a></li>
+                        <li><a href="#contact" data-translate="nav_contact">Контакти</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 data-translate="footer_destinations_title">Популярні напрямки</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-translate="destination_europe">Європа</a></li>
+                        <li><a href="#" data-translate="destination_asia">Азія</a></li>
+                        <li><a href="#" data-translate="destination_america">Америка</a></li>
+                        <li><a href="#" data-translate="destination_africa">Африка</a></li>
+                        <li><a href="#" data-translate="destination_australia">Австралія</a></li>
+                        <li><a href="#" data-translate="destination_oceania">Океанія</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 data-translate="footer_newsletter_title">Підписка на новини</h3>
+                    <p data-translate="footer_newsletter_desc">Підпишіться на нашу розсилку, щоб отримувати останні новини та спеціальні пропозиції</p>
+                    <form class="newsletter-form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Ваш email" required>
+                        </div>
+                        <button type="submit" class="form-button" data-translate="footer_subscribe">Підписатися</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-translate="footer_copyright">&copy; 2023 King Hous Travel. Всі права захищено.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Корзина -->
+    <div class="cart-container" id="cart-container">
+        <div class="cart-header">
+            <h3 data-translate="cart_title">Ваша корзина</h3>
+            <button class="cart-close" id="cart-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty">
+                <i class="fas fa-shopping-cart"></i>
+                <p data-translate="cart_empty">Ваша корзина порожня</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span data-translate="cart_total">Разом:</span>
+                <span id="cart-total">0 грн</span>
+            </div>
+            <button class="cart-checkout" id="cart-checkout" data-translate="cart_checkout">Оплатити</button>
+        </div>
+    </div>
+
+    <!-- Модальне вікно оплати -->
+    <div class="payment-modal" id="payment-modal">
+        <div class="payment-container">
+            <div class="payment-header">
+                <h3 data-translate="payment_title">Оплата замовлення</h3>
+                <button class="payment-close" id="payment-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="payment-body">
+                <form class="payment-form" id="payment-form">
+                    <div class="payment-form-group">
+                        <label for="card-number" data-translate="payment_card_number">Номер картки</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                        <div class="card-icons">
+                            <div class="card-icon" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png')"></div>
+                            <div class="card-icon" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png')"></div>
+                        </div>
+                    </div>
+                    <div class="payment-form-row">
+                        <div class="payment-form-group half">
+                            <label for="card-expiry" data-translate="payment_expiry">Термін дії</label>
+                            <input type="text" id="card-expiry" placeholder="MM/РР" maxlength="5" required>
+                        </div>
+                        <div class="payment-form-group half">
+                            <label for="card-cvc" data-translate="payment_cvc">CVC</label>
+                            <input type="text" id="card-cvc" placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+                    <div class="payment-form-group">
+                        <label for="card-name" data-translate="payment_name">Ім'я власника</label>
+                        <input type="text" id="card-name" placeholder="ІМ'Я ПРІЗВИЩЕ" required>
+                    </div>
+                    <div class="payment-form-group">
+                        <label for="card-email" data-translate="payment_email">Email</label>
+                        <input type="email" id="card-email" placeholder="your@email.com" required>
+                    </div>
+                </form>
+            </div>
+            <div class="payment-footer">
+                <div class="payment-total">
+                    <span data-translate="payment_total">До сплати:</span>
+                    <span id="payment-total">0 грн</span>
+                </div>
+                <button class="payment-button" id="payment-button" data-translate="payment_button">Оплатити</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Сповіщення -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="notification-message" id="notification-message">
+            Повідомлення
+        </div>
+        <button class="notification-close" id="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Аудіо для музики -->
+    <audio id="background-music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-jazzcomedy.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Мультиязичність
+            const translations = {
+                uk: {
+                    nav_home: "Головна",
+                    nav_services: "Послуги",
+                    nav_tours: "Тури",
+                    nav_clients: "Відгуки",
+                    nav_blog: "Блог",
+                    nav_contact: "Контакти",
+                    hero_title: "Відкрийте для себе світ разом з нами",
+                    hero_subtitle: "Незабутні подорожі, ексклюзивні тури та професійний сервіс для вашого ідеального відпочинку",
+                    hero_button1: "Переглянути тури",
+                    hero_button2: "Зв'язатися з нами",
+                    stat_tours: "Турів",
+                    stat_countries: "Країн",
+                    stat_clients: "Клієнтів",
+                    stat_experience: "Років досвіду",
+                    services_title: "Наші послуги",
+                    services_subtitle: "Ми пропонуємо повний спектр туристичних послуг для вашого комфорту та задоволення",
+                    service1_title: "Індивідуальні тури",
+                    service1_desc: "Створимо для вас унікальний маршрут відповідно до ваших побажань та інтересів. Індивідуальний підхід до кожного клієнта.",
+                    service1_button: "Детальніше",
+                    service2_title: "Бронювання готелів",
+                    service2_desc: "Підберемо найкращі варіанти проживання будь-якого рівня комфорту. Співпрацюємо лише з перевіреними готелями та резортами.",
+                    service2_button: "Детальніше",
+                    service3_title: "Авіаквитки",
+                    service3_desc: "Забронюємо авіаквитки за найвигіднішими цінами від надійних авіакомпаній. Допоможемо з вибором оптимального маршруту.",
+                    service3_button: "Детальніше",
+                    service4_title: "Візова підтримка",
+                    service4_desc: "Допоможемо з оформленням віз та необхідних документів для подорожі. Повний супровід на всіх етапах.",
+                    service4_button: "Детальніше",
+                    service5_title: "Організація відпочинку",
+                    service5_desc: "Організуємо повний пакет послуг для вашого відпочинку: екскурсії, розваги, трансфери та інше для максимального комфорту.",
+                    service5_button: "Детальніше",
+                    service6_title: "Страхування",
+                    service6_desc: "Запропонуємо найкращі варіанти туристичного страхування для вашої безпеки під час подорожі. Покриття будь-яких ризиків.",
+                    service6_button: "Детальніше",
+                    tours_title: "Популярні тури",
+                    tours_subtitle: "Оберіть тур мрії з нашої колекції найкращих пропозицій",
+                    tour1_badge: "Популярний",
+                    tour1_title: "Романтична Париж",
+                    tour1_location: "Франція, Париж",
+                    tour1_desc: "Незабутній вікенд у місті кохання. Відвідайте Ейфелеву вежу, Лувр, прогуляйтеся Монмартром та насолоджуйтеся французькою кухнею.",
+                    tour1_duration: "3 дні / 2 ночі",
+                    tour1_group: "2-4 особи",
+                    tour2_badge: "Хіт",
+                    tour2_title: "Тропічний раєм",
+                    tour2_location: "Мальдіви",
+                    tour2_desc: "Розкішний відпочинок на білосніжних пляжах Мальдівів. Вілли над водою, дайвінг, спа-процедури та неймовірні заходи сонця.",
+                    tour2_duration: "7 днів / 6 ночей",
+                    tour2_group: "2 особи",
+                    tour3_badge: "Рекомендовано",
+                    tour3_title: "Східні казки",
+                    tour3_location: "ОАЕ, Дубай",
+                    tour3_desc: "Неймовірне поєднання сучасності та традицій. Хмарочоси, розкішні торгові центри, пустельні сафарі та ексклюзивний шопінг.",
+                    tour3_duration: "5 днів / 4 ночі",
+                    tour3_group: "2-6 осіб",
+                    tour4_badge: "Відпочинок",
+                    tour4_title: "Кришталеві води",
+                    tour4_location: "Таїланд",
+                    tour4_desc: "Екзотичний відпочинок на островах Таїланду. Бангкок, Пхукет, Самуї - найкращі пляжі, тайський масаж та незабутня кухня.",
+                    tour4_duration: "10 днів / 9 ночей",
+                    tour4_group: "2-4 особи",
+                    tour5_badge: "Природа",
+                    tour5_title: "Альпійська пригода",
+                    tour5_location: "Швейцарія",
+                    tour5_desc: "Неймовірні гірські пейзажі, чисте повітря та гірськолижні курорти. Цюрих, Женева, інтерлакен та підйом на Маттерхорн.",
+                    tour5_duration: "8 днів / 7 ночей",
+                    tour5_group: "2-6 осіб",
+                    tour6_badge: "Культура",
+                    tour6_title: "Стародавній світ",
+                    tour6_location: "Італія, Рим",
+                    tour6_desc: "Подорож до серця імперії. Колізей, Ватикан, фонтан Треві, Сикстинська капела та найкраща італійська кухня.",
+                    tour6_duration: "6 днів / 5 ночей",
+                    tour6_group: "2-8 осіб",
+                    add_to_cart: "Додати",
+                    clients_title: "Відгуки клієнтів",
+                    clients_subtitle: "Дізнайтеся, що говорять про нас наші задоволені клієнти",
+                    client1_tour: "Подорож до Парижу",
+                    client1_review: "Неймовірно організована подорож! Все було продумано до дрібниць: готель просто чудовий, екскурсії дуже цікаві, а гід - справжній професіонал. Обов'язково звернуся знову!",
+                    client2_tour: "Відпочинок на Мальдівах",
+                    client2_review: "Мріяв про відпочинок на Мальдівах і King Hous Travel втілили мою мрію в життя! Вілла над водою, неймовірні види, ідеальний сервіс. Це був найкращий відпочинок у моєму житті!",
+                    client3_tour: "Подорож до Таїланду",
+                    client3_review: "Дуже дякую за чудову організацію туру! Все було на найвищому рівні: переліт, трансфери, готелі, екскурсії. Особливо сподобалося спілкування з місцевими гідами, які розповіли багато цікавого.",
+                    client4_tour: "Поїздка до Дубаю",
+                    client4_review: "Дубай перевершив усі мої очікування! Величезне дякую команді King Hous Travel за професійний підхід. Хотілося б більше вільного часу, але в цілому все було чудово!",
+                    client5_tour: "Тур по Швейцарії",
+                    client5_review: "Швейцарія - це казка! Дякую за ідеально спланований маршрут. Гори, озера, чисті міста - все було неймовірно. Особливо запам'ятався підйом на Маттерхорн - це щось неймовірне!",
+                    client6_tour: "Подорож до Італії",
+                    client6_review: "Рим вразив мене своєю історією та архітектурою! Дякую King Hous Travel за чудову організацію туру. Екскурсії були дуже пізнавальними, а гід - справжній знавець історії. Обов'язково повернуся!",
+                    blog_title: "Наш блог",
+                    blog_subtitle: "Корисні поради, цікаві історії та новини світу подорожей",
+                    blog1_title: "Топ-10 місць для відвідування в Європі цього літа",
+                    blog1_desc: "Літо - ідеальний час для подорожей Європою. У нашій статті ми зібрали найкращі місця, які варто відвідати цього сезону: від мальовничих берегів Середземномор'я до гірських вершин Альп...",
+                    blog2_title: "Як спакувати валізу для ідеальної подорожі",
+                    blog2_desc: "Правильне пакування - запорука комфортної подорожі. У нашому гайді ми поділимося секретами, як зібрати валізу ефективно, взявши з собою все необхідне і не перевантаживши себе...",
+                    blog3_title: "Найкращі пляжі світу для вашого відпочинку",
+                    blog3_desc: "Мрієте про ідеальний пляжний відпочинок? Ми підготували для вас добірку найкрасивіших пляжів світу: від білосніжних берегів Мальдівів до екзотичних узбережжів Карибського моря...",
+                    blog_read_more: "Читати далі",
+                    contact_title: "Зв'яжіться з нами",
+                    contact_subtitle: "Ми завжди раді відповісти на ваші запитання та допомогти з організацією подорожі",
+                    contact_info_title: "Контактна інформація",
+                    contact_address: "Адреса",
+                    contact_phone: "Телефон",
+                    contact_email: "Email",
+                    contact_hours: "Графік роботи",
+                    contact_schedule: "Пн-Пт: 9:00 - 18:00<br>Сб: 10:00 - 15:00",
+                    contact_form_title: "Надішліть нам повідомлення",
+                    form_name: "Ваше ім'я",
+                    form_email: "Email",
+                    form_subject: "Тема",
+                    form_subject_placeholder: "Оберіть тему",
+                    form_subject_booking: "Бронювання туру",
+                    form_subject_info: "Інформація про тури",
+                    form_subject_cooperation: "Співпраця",
+                    form_subject_other: "Інше",
+                    form_message: "Повідомлення",
+                    form_submit: "Надіслати повідомлення",
+                    footer_about: "Найкращі тури та незабутні подорожі для вас. Ми робимо ваші мрії реальністю з 2008 року.",
+                    footer_links_title: "Швидкі посилання",
+                    footer_destinations_title: "Популярні напрямки",
+                    destination_europe: "Європа",
+                    destination_asia: "Азія",
+                    destination_america: "Америка",
+                    destination_africa: "Африка",
+                    destination_australia: "Австралія",
+                    destination_oceania: "Океанія",
+                    footer_newsletter_title: "Підписка на новини",
+                    footer_newsletter_desc: "Підпишіться на нашу розсилку, щоб отримувати останні новини та спеціальні пропозиції",
+                    footer_subscribe: "Підписатися",
+                    footer_copyright: "&copy; 2023 King Hous Travel. Всі права захищено.",
+                    cart_title: "Ваша корзина",
+                    cart_empty: "Ваша корзина порожня",
+                    cart_total: "Разом:",
+                    cart_checkout: "Оплатити",
+                    payment_title: "Оплата замовлення",
+                    payment_card_number: "Номер картки",
+                    payment_expiry: "Термін дії",
+                    payment_cvc: "CVC",
+                    payment_name: "Ім'я власника",
+                    payment_email: "Email",
+                    payment_total: "До сплати:",
+                    payment_button: "Оплатити",
+                    notification_cart_added: "Тур додано до корзини",
+                    notification_cart_removed: "Тур видалено з корзини",
+                    notification_cart_empty: "Ваша корзина порожня",
+                    notification_payment_success: "Оплата успішно проведена! Дякуємо за замовлення.",
+                    notification_form_sent: "Ваше повідомлення надіслано! Ми зв'яжемося з вами найближчим часом.",
+                    notification_fill_fields: "Будь ласка, заповніть всі поля"
+                },
+                en: {
+                    nav_home: "Home",
+                    nav_services: "Services",
+                    nav_tours: "Tours",
+                    nav_clients: "Reviews",
+                    nav_blog: "Blog",
+                    nav_contact: "Contact",
+                    hero_title: "Discover the world with us",
+                    hero_subtitle: "Unforgettable trips, exclusive tours and professional service for your perfect vacation",
+                    hero_button1: "View tours",
+                    hero_button2: "Contact us",
+                    stat_tours: "Tours",
+                    stat_countries: "Countries",
+                    stat_clients: "Clients",
+                    stat_experience: "Years of experience",
+                    services_title: "Our services",
+                    services_subtitle: "We offer a full range of travel services for your comfort and satisfaction",
+                    service1_title: "Individual tours",
+                    service1_desc: "We will create a unique route for you according to your wishes and interests. Individual approach to each client.",
+                    service1_button: "More details",
+                    service2_title: "Hotel booking",
+                    service2_desc: "We will select the best accommodation options of any comfort level. We cooperate only with verified hotels and resorts.",
+                    service2_button: "More details",
+                    service3_title: "Air tickets",
+                    service3_desc: "We will book air tickets at the best prices from reliable airlines. We will help you choose the optimal route.",
+                    service3_button: "More details",
+                    service4_title: "Visa support",
+                    service4_desc: "We will help with processing visas and necessary documents for travel. Full support at all stages.",
+                    service4_button: "More details",
+                    service5_title: "Vacation organization",
+                    service5_desc: "We will organize a full package of services for your vacation: excursions, entertainment, transfers and more for maximum comfort.",
+                    service5_button: "More details",
+                    service6_title: "Insurance",
+                    service6_desc: "We will offer the best options for travel insurance for your safety during the trip. Coverage of any risks.",
+                    service6_button: "More details",
+                    tours_title: "Popular tours",
+                    tours_subtitle: "Choose the tour of your dreams from our collection of the best offers",
+                    tour1_badge: "Popular",
+                    tour1_title: "Romantic Paris",
+                    tour1_location: "France, Paris",
+                    tour1_desc: "An unforgettable weekend in the city of love. Visit the Eiffel Tower, the Louvre, walk around Montmartre and enjoy French cuisine.",
+                    tour1_duration: "3 days / 2 nights",
+                    tour1_group: "2-4 people",
+                    tour2_badge: "Hit",
+                    tour2_title: "Tropical paradise",
+                    tour2_location: "Maldives",
+                    tour2_desc: "Luxury vacation on the white sandy beaches of the Maldives. Overwater villas, diving, spa treatments and incredible sunsets.",
+                    tour2_duration: "7 days / 6 nights",
+                    tour2_group: "2 people",
+                    tour3_badge: "Recommended",
+                    tour3_title: "Eastern tales",
+                    tour3_location: "UAE, Dubai",
+                    tour3_desc: "An incredible combination of modernity and traditions. Skyscrapers, luxurious shopping centers, desert safaris and exclusive shopping.",
+                    tour3_duration: "5 days / 4 nights",
+                    tour3_group: "2-6 people",
+                    tour4_badge: "Vacation",
+                    tour4_title: "Crystal waters",
+                    tour4_location: "Thailand",
+                    tour4_desc: "Exotic vacation on the islands of Thailand. Bangkok, Phuket, Samui - the best beaches, Thai massage and unforgettable cuisine.",
+                    tour4_duration: "10 days / 9 nights",
+                    tour4_group: "2-4 people",
+                    tour5_badge: "Nature",
+                    tour5_title: "Alpine adventure",
+                    tour5_location: "Switzerland",
+                    tour5_desc: "Incredible mountain landscapes, clean air and ski resorts. Zurich, Geneva, Interlaken and ascent to the Matterhorn.",
+                    tour5_duration: "8 days / 7 nights",
+                    tour5_group: "2-6 people",
+                    tour6_badge: "Culture",
+                    tour6_title: "Ancient world",
+                    tour6_location: "Italy, Rome",
+                    tour6_desc: "Journey to the heart of the empire. Colosseum, Vatican, Trevi Fountain, Sistine Chapel and the best Italian cuisine.",
+                    tour6_duration: "6 days / 5 nights",
+                    tour6_group: "2-8 people",
+                    add_to_cart: "Add",
+                    clients_title: "Customer reviews",
+                    clients_subtitle: "Find out what our satisfied customers say about us",
+                    client1_tour: "Trip to Paris",
+                    client1_review: "Incredibly organized trip! Everything was thought out to the smallest detail: the hotel is just wonderful, the excursions are very interesting, and the guide is a real professional. I will definitely contact again!",
+                    client2_tour: "Vacation in the Maldives",
+                    client2_review: "I dreamed of a vacation in the Maldives and King Hous Travel made my dream come true! Overwater villa, incredible views, perfect service. It was the best vacation of my life!",
+                    client3_tour: "Trip to Thailand",
+                    client3_review: "Thank you very much for the wonderful organization of the tour! Everything was at the highest level: flights, transfers, hotels, excursions. I especially liked communicating with local guides who told a lot of interesting things.",
+                    client4_tour: "Trip to Dubai",
+                    client4_review: "Dubai exceeded all my expectations! Huge thanks to the King Hous Travel team for their professional approach. I would like more free time, but in general everything was great!",
+                    client5_tour: "Tour of Switzerland",
+                    client5_review: "Switzerland is a fairy tale! Thank you for the perfectly planned route. Mountains, lakes, clean cities - everything was incredible. The ascent to the Matterhorn was especially memorable - it's something incredible!",
+                    client6_tour: "Trip to Italy",
+                    client6_review: "Rome impressed me with its history and architecture! Thank you King Hous Travel for the wonderful organization of the tour. The excursions were very informative, and the guide is a real expert in history. I will definitely come back!",
+                    blog_title: "Our blog",
+                    blog_subtitle: "Useful tips, interesting stories and travel news",
+                    blog1_title: "Top 10 places to visit in Europe this summer",
+                    blog1_desc: "Summer is the perfect time for traveling in Europe. In our article, we have collected the best places to visit this season: from the picturesque shores of the Mediterranean to the mountain peaks of the Alps...",
+                    blog2_title: "How to pack a suitcase for the perfect trip",
+                    blog2_desc: "Proper packing is the key to a comfortable trip. In our guide, we will share the secrets of how to pack a suitcase efficiently, taking everything you need and not overloading yourself...",
+                    blog3_title: "The best beaches in the world for your vacation",
+                    blog3_desc: "Dreaming of the perfect beach vacation? We have prepared for you a selection of the most beautiful beaches in the world: from the white sandy beaches of the Maldives to the exotic coasts of the Caribbean...",
+                    blog_read_more: "Read more",
+                    contact_title: "Contact us",
+                    contact_subtitle: "We are always happy to answer your questions and help with organizing your trip",
+                    contact_info_title: "Contact information",
+                    contact_address: "Address",
+                    contact_phone: "Phone",
+                    contact_email: "Email",
+                    contact_hours: "Working hours",
+                    contact_schedule: "Mon-Fri: 9:00 - 18:00<br>Sat: 10:00 - 15:00",
+                    contact_form_title: "Send us a message",
+                    form_name: "Your name",
+                    form_email: "Email",
+                    form_subject: "Subject",
+                    form_subject_placeholder: "Select a topic",
+                    form_subject_booking: "Tour booking",
+                    form_subject_info: "Information about tours",
+                    form_subject_cooperation: "Cooperation",
+                    form_subject_other: "Other",
+                    form_message: "Message",
+                    form_submit: "Send message",
+                    footer_about: "The best tours and unforgettable trips for you. We make your dreams come true since 2008.",
+                    footer_links_title: "Quick links",
+                    footer_destinations_title: "Popular destinations",
+                    destination_europe: "Europe",
+                    destination_asia: "Asia",
+                    destination_america: "America",
+                    destination_africa: "Africa",
+                    destination_australia: "Australia",
+                    destination_oceania: "Oceania",
+                    footer_newsletter_title: "Newsletter subscription",
+                    footer_newsletter_desc: "Subscribe to our newsletter to receive the latest news and special offers",
+                    footer_subscribe: "Subscribe",
+                    footer_copyright: "&copy; 2023 King Hous Travel. All rights reserved.",
+                    cart_title: "Your cart",
+                    cart_empty: "Your cart is empty",
+                    cart_total: "Total:",
+                    cart_checkout: "Checkout",
+                    payment_title: "Payment",
+                    payment_card_number: "Card number",
+                    payment_expiry: "Expiry date",
+                    payment_cvc: "CVC",
+                    payment_name: "Cardholder name",
+                    payment_email: "Email",
+                    payment_total: "Amount to pay:",
+                    payment_button: "Pay",
+                    notification_cart_added: "Tour added to cart",
+                    notification_cart_removed: "Tour removed from cart",
+                    notification_cart_empty: "Your cart is empty",
+                    notification_payment_success: "Payment successful! Thank you for your order.",
+                    notification_form_sent: "Your message has been sent! We will contact you shortly.",
+                    notification_fill_fields: "Please fill in all fields"
+                },
+                de: {
+                    nav_home: "Startseite",
+                    nav_services: "Dienstleistungen",
+                    nav_tours: "Touren",
+                    nav_clients: "Bewertungen",
+                    nav_blog: "Blog",
+                    nav_contact: "Kontakt",
+                    hero_title: "Entdecken Sie die Welt mit uns",
+                    hero_subtitle: "Unvergessliche Reisen, exklusive Touren und professioneller Service für Ihren perfekten Urlaub",
+                    hero_button1: "Touren anzeigen",
+                    hero_button2: "Kontaktieren Sie uns",
+                    stat_tours: "Touren",
+                    stat_countries: "Länder",
+                    stat_clients: "Kunden",
+                    stat_experience: "Jahre Erfahrung",
+                    services_title: "Unsere Dienstleistungen",
+                    services_subtitle: "Wir bieten ein vollständiges Spektrum an Reisedienstleistungen für Ihren Komfort und Ihre Zufriedenheit",
+                    service1_title: "Individuelle Touren",
+                    service1_desc: "Wir erstellen für Sie eine einzigartige Route entsprechend Ihrer Wünsche und Interessen. Individueller Ansatz für jeden Kunden.",
+                    service1_button: "Mehr Details",
+                    service2_title: "Hotelbuchung",
+                    service2_desc: "Wir wählen die besten Unterkunftsoptionen jeglichen Komfortniveaus aus. Wir arbeiten nur mit verifizierten Hotels und Resorts zusammen.",
+                    service2_button: "Mehr Details",
+                    service3_title: "Flugtickets",
+                    service3_desc: "Wir buchen Flugtickets zu den besten Preisen von zuverlässigen Fluggesellschaften. Wir helfen Ihnen bei der Wahl der optimalen Route.",
+                    service3_button: "Mehr Details",
+                    service4_title: "Visa-Unterstützung",
+                    service4_desc: "Wir helfen bei der Bearbeitung von Visa und erforderlichen Dokumenten für die Reise. Vollständige Unterstützung in allen Phasen.",
+                    service4_button: "Mehr Details",
+                    service5_title: "Urlaubsorganisation",
+                    service5_desc: "Wir organisieren ein komplettes Servicepaket für Ihren Urlaub: Ausflüge, Unterhaltung, Transfers und mehr für maximalen Komfort.",
+                    service5_button: "Mehr Details",
+                    service6_title: "Versicherung",
+                    service6_desc: "Wir bieten die besten Optionen für Reiseversicherungen für Ihre Sicherheit während der Reise. Abdeckung jeglicher Risiken.",
+                    service6_button: "Mehr Details",
+                    tours_title: "Beliebte Touren",
+                    tours_subtitle: "Wählen Sie die Traumreise aus unserer Kollektion der besten Angebote",
+                    tour1_badge: "Beliebt",
+                    tour1_title: "Romantisches Paris",
+                    tour1_location: "Frankreich, Paris",
+                    tour1_desc: "Ein unvergessliches Wochenende in der Stadt der Liebe. Besuchen Sie den Eiffelturm, den Louvre, spazieren Sie durch Montmartre und genießen Sie die französische Küche.",
+                    tour1_duration: "3 Tage / 2 Nächte",
+                    tour1_group: "2-4 Personen",
+                    tour2_badge: "Hit",
+                    tour2_title: "Tropisches Paradies",
+                    tour2_location: "Malediven",
+                    tour2_desc: "Luxusurlaub an den weißen Sandstränden der Malediven. Überwasser-Villen, Tauchen, Spa-Behandlungen und unglaubliche Sonnenuntergänge.",
+                    tour2_duration: "7 Tage / 6 Nächte",
+                    tour2_group: "2 Personen",
+                    tour3_badge: "Empfohlen",
+                    tour3_title: "Östliche Märchen",
+                    tour3_location: "VAE, Dubai",
+                    tour3_desc: "Eine unglaubliche Kombination aus Moderne und Tradition. Wolkenkratzer, luxuriöse Einkaufszentren, Wüstensafaris und exklusives Shopping.",
+                    tour3_duration: "5 Tage / 4 Nächte",
+                    tour3_group: "2-6 Personen",
+                    tour4_badge: "Urlaub",
+                    tour4_title: "Kristallklare Gewässer",
+                    tour4_location: "Thailand",
+                    tour4_desc: "Exotischer Urlaub auf den Inseln Thailands. Bangkok, Phuket, Samui - die besten Strände, thailändische Massage und unvergessliche Küche.",
+                    tour4_duration: "10 Tage / 9 Nächte",
+                    tour4_group: "2-4 Personen",
+                    tour5_badge: "Natur",
+                    tour5_title: "Alpenabenteuer",
+                    tour5_location: "Schweiz",
+                    tour5_desc: "Unglaubliche Berglandschaften, saubere Luft und Skigebiete. Zürich, Genf, Interlaken und Besteigung des Matterhorns.",
+                    tour5_duration: "8 Tage / 7 Nächte",
+                    tour5_group: "2-6 Personen",
+                    tour6_badge: "Kultur",
+                    tour6_title: "Antike Welt",
+                    tour6_location: "Italien, Rom",
+                    tour6_desc: "Reise ins Herz des Imperiums. Kolosseum, Vatikan, Trevi-Brunnen, Sixtinische Kapelle und die beste italienische Küche.",
+                    tour6_duration: "6 Tage / 5 Nächte",
+                    tour6_group: "2-8 Personen",
+                    add_to_cart: "Hinzufügen",
+                    clients_title: "Kundenbewertungen",
+                    clients_subtitle: "Finden Sie heraus, was unsere zufriedenen Kunden über uns sagen",
+                    client1_tour: "Reise nach Paris",
+                    client1_review: "Unglaublich organisierte Reise! Alles war bis ins kleinste Detail durchdacht: Das Hotel ist einfach wunderbar, die Ausflüge sind sehr interessant und der Guide ist ein echter Profi. Ich werde mich definitiv wieder melden!",
+                    client2_tour: "Urlaub auf den Malediven",
+                    client2_review: "Ich träumte von einem Urlaub auf den Malediven und King Hous Travel hat meinen Traum wahr werden lassen! Überwasservilla, unglaubliche Ausblicke, perfekter Service. Es war der beste Urlaub meines Lebens!",
+                    client3_tour: "Reise nach Thailand",
+                    client3_review: "Vielen Dank für die wunderbare Organisation der Tour! Alles war auf höchstem Niveau: Flüge, Transfers, Hotels, Ausflüge. Besonders gefallen hat mir die Kommunikation mit den lokalen Guides, die viele interessante Dinge erzählt haben.",
+                    client4_tour: "Reise nach Dubai",
+                    client4_review: "Dubai hat alle meine Erwartungen übertroffen! Großer Dank an das Team von King Hous Travel für den professionellen Ansatz. Ich würde mir mehr Freizeit wünschen, aber im Großen und Ganzen war alles großartig!",
+                    client5_tour: "Tour durch die Schweiz",
+                    client5_review: "Die Schweiz ist ein Märchen! Danke für die perfekt geplante Route. Berge, Seen, saubere Städte - alles war unglaublich. Besonders in Erinnerung geblieben ist die Besteigung des Matterhorns - das ist etwas Unglaubliches!",
+                    client6_tour: "Reise nach Italien",
+                    client6_review: "Rom hat mich mit seiner Geschichte und Architektur beeindruckt! Danke King Hous Travel für die wunderbare Organisation der Tour. Die Ausflüge waren sehr lehrreich und der Guide ist ein echter Experte für Geschichte. Ich komme definitiv zurück!",
+                    blog_title: "Unser Blog",
+                    blog_subtitle: "Nützliche Tipps, interessante Geschichten und Reisenachrichten",
+                    blog1_title: "Top 10 Reiseziele in Europa diesen Sommer",
+                    blog1_desc: "Der Sommer ist die perfekte Zeit für Reisen in Europa. In unserem Artikel haben wir die besten Orte zusammengestellt, die Sie diese Saison besuchen sollten: von den malerischen Küsten des Mittelmeers bis zu den Berggipfeln der Alpen...",
+                    blog2_title: "Wie man einen Koffer für die perfekte Reise packt",
+                    blog2_desc: "Richtiges Packen ist der Schlüssel zu einer komfortablen Reise. In unserem Leitfaden teilen wir die Geheimnisse, wie man einen Koffer effizient packt, alles Notwendige mitnimmt und sich nicht überlädt...",
+                    blog3_title: "Die besten Strände der Welt für Ihren Urlaub",
+                    blog3_desc: "Träumen Sie von einem perfekten Strandurlaub? Wir haben eine Auswahl der schönsten Strände der Welt für Sie zusammengestellt: von den weißen Sandstränden der Malediven bis zu den exotischen Küsten der Karibik...",
+                    blog_read_more: "Weiterlesen",
+                    contact_title: "Kontaktieren Sie uns",
+                    contact_subtitle: "Wir freuen uns immer, Ihre Fragen zu beantworten und bei der Organisation Ihrer Reise zu helfen",
+                    contact_info_title: "Kontaktinformationen",
+                    contact_address: "Adresse",
+                    contact_phone: "Telefon",
+                    contact_email: "Email",
+                    contact_hours: "Öffnungszeiten",
+                    contact_schedule: "Mo-Fr: 9:00 - 18:00<br>Sa: 10:00 - 15:00",
+                    contact_form_title: "Senden Sie uns eine Nachricht",
+                    form_name: "Ihr Name",
+                    form_email: "Email",
+                    form_subject: "Betreff",
+                    form_subject_placeholder: "Thema auswählen",
+                    form_subject_booking: "Tourbuchung",
+                    form_subject_info: "Informationen zu Touren",
+                    form_subject_cooperation: "Zusammenarbeit",
+                    form_subject_other: "Andere",
+                    form_message: "Nachricht",
+                    form_submit: "Nachricht senden",
+                    footer_about: "Die besten Touren und unvergessliche Reisen für Sie. Wir machen Ihre Träume seit 2008 wahr.",
+                    footer_links_title: "Quick-Links",
+                    footer_destinations_title: "Beliebte Reiseziele",
+                    destination_europe: "Europa",
+                    destination_asia: "Asien",
+                    destination_america: "Amerika",
+                    destination_africa: "Afrika",
+                    destination_australia: "Australien",
+                    destination_oceania: "Ozeanien",
+                    footer_newsletter_title: "Newsletter-Anmeldung",
+                    footer_newsletter_desc: "Abonnieren Sie unseren Newsletter, um die neuesten Nachrichten und Sonderangebote zu erhalten",
+                    footer_subscribe: "Abonnieren",
+                    footer_copyright: "&copy; 2023 King Hous Travel. Alle Rechte vorbehalten.",
+                    cart_title: "Ihr Warenkorb",
+                    cart_empty: "Ihr Warenkorb ist leer",
+                    cart_total: "Gesamt:",
+                    cart_checkout: "Zur Kasse",
+                    payment_title: "Zahlung",
+                    payment_card_number: "Kartennummer",
+                    payment_expiry: "Gültig bis",
+                    payment_cvc: "CVC",
+                    payment_name: "Karteninhaber",
+                    payment_email: "Email",
+                    payment_total: "Zu zahlender Betrag:",
+                    payment_button: "Bezahlen",
+                    notification_cart_added: "Tour zum Warenkorb hinzugefügt",
+                    notification_cart_removed: "Tour aus dem Warenkorb entfernt",
+                    notification_cart_empty: "Ihr Warenkorb ist leer",
+                    notification_payment_success: "Zahlung erfolgreich! Vielen Dank für Ihre Bestellung.",
+                    notification_form_sent: "Ihre Nachricht wurde gesendet! Wir werden uns in Kürze mit Ihnen in Verbindung setzen.",
+                    notification_fill_fields: "Bitte füllen Sie alle Felder aus"
+                },
+                it: {
+                    nav_home: "Home",
+                    nav_services: "Servizi",
+                    nav_tours: "Tour",
+                    nav_clients: "Recensioni",
+                    nav_blog: "Blog",
+                    nav_contact: "Contatti",
+                    hero_title: "Scopri il mondo con noi",
+                    hero_subtitle: "Viaggi indimenticabili, tour esclusivi e servizio professionale per le tue vacanze perfette",
+                    hero_button1: "Visualizza tour",
+                    hero_button2: "Contattaci",
+                    stat_tours: "Tour",
+                    stat_countries: "Paesi",
+                    stat_clients: "Clienti",
+                    stat_experience: "Anni di esperienza",
+                    services_title: "I nostri servizi",
+                    services_subtitle: "Offriamo una gamma completa di servizi di viaggio per il tuo comfort e soddisfazione",
+                    service1_title: "Tour individuali",
+                    service1_desc: "Creeremo per te un percorso unico secondo i tuoi desideri e interessi. Approccio individuale per ogni cliente.",
+                    service1_button: "Maggiori dettagli",
+                    service2_title: "Prenotazione hotel",
+                    service2_desc: "Selezioneremo le migliori opzioni di alloggio di qualsiasi livello di comfort. Collaboriamo solo con hotel e resort verificati.",
+                    service2_button: "Maggiori dettagli",
+                    service3_title: "Biglietti aerei",
+                    service3_desc: "Prenoteremo biglietti aerei ai migliori prezzi da compagnie aeree affidabili. Ti aiuteremo a scegliere il percorso ottimale.",
+                    service3_button: "Maggiori dettagli",
+                    service4_title: "Supporto visti",
+                    service4_desc: "Ti aiuteremo con l'elaborazione di visti e documenti necessari per il viaggio. Supporto completo in tutte le fasi.",
+                    service4_button: "Maggiori dettagli",
+                    service5_title: "Organizzazione vacanze",
+                    service5_desc: "Organizzeremo un pacchetto completo di servizi per le tue vacanze: escursioni, intrattenimento, trasferimenti e altro per il massimo comfort.",
+                    service5_button: "Maggiori dettagli",
+                    service6_title: "Assicurazione",
+                    service6_desc: "Offriremo le migliori opzioni di assicurazione di viaggio per la tua sicurezza durante il viaggio. Copertura di qualsiasi rischio.",
+                    service6_button: "Maggiori dettagli",
+                    tours_title: "Tour popolari",
+                    tours_subtitle: "Scegli il tour dei tuoi sogni dalla nostra collezione delle migliori offerte",
+                    tour1_badge: "Popolare",
+                    tour1_title: "Parigi romantica",
+                    tour1_location: "Francia, Parigi",
+                    tour1_desc: "Un weekend indimenticabile nella città dell'amore. Visita la Torre Eiffel, il Louvre, passeggia per Montmartre e goditi la cucina francese.",
+                    tour1_duration: "3 giorni / 2 notti",
+                    tour1_group: "2-4 persone",
+                    tour2_badge: "Hit",
+                    tour2_title: "Paradiso tropicale",
+                    tour2_location: "Maldive",
+                    tour2_desc: "Vacanze di lusso sulle spiagge di sabbia bianca delle Maldive. Ville sull'acqua, immersioni, trattamenti spa e tramonti incredibili.",
+                    tour2_duration: "7 giorni / 6 notti",
+                    tour2_group: "2 persone",
+                    tour3_badge: "Consigliato",
+                    tour3_title: "Racconti orientali",
+                    tour3_location: "Emirati Arabi Uniti, Dubai",
+                    tour3_desc: "Un'incredibile combinazione di modernità e tradizioni. Grattacieli, centri commerciali lussuosi, safari nel deserto e shopping esclusivo.",
+                    tour3_duration: "5 giorni / 4 notti",
+                    tour3_group: "2-6 persone",
+                    tour4_badge: "Vacanza",
+                    tour4_title: "Acque cristalline",
+                    tour4_location: "Thailandia",
+                    tour4_desc: "Vacanze esotiche sulle isole della Thailandia. Bangkok, Phuket, Samui - le migliori spiagge, massaggi tailandesi e cucina indimenticabile.",
+                    tour4_duration: "10 giorni / 9 notti",
+                    tour4_group: "2-4 persone",
+                    tour5_badge: "Natura",
+                    tour5_title: "Avventura alpina",
+                    tour5_location: "Svizzera",
+                    tour5_desc: "Paesaggi montani incredibili, aria pulita e stazioni sciistiche. Zurigo, Ginevra, Interlaken e salita sul Matterhorn.",
+                    tour5_duration: "8 giorni / 7 notti",
+                    tour5_group: "2-6 persone",
+                    tour6_badge: "Cultura",
+                    tour6_title: "Mondo antico",
+                    tour6_location: "Italia, Roma",
+                    tour6_desc: "Viaggio nel cuore dell'impero. Colosseo, Vaticano, Fontana di Trevi, Cappella Sistina e la migliore cucina italiana.",
+                    tour6_duration: "6 giorni / 5 notti",
+                    tour6_group: "2-8 persone",
+                    add_to_cart: "Aggiungi",
+                    clients_title: "Recensioni dei clienti",
+                    clients_subtitle: "Scopri cosa dicono di noi i nostri clienti soddisfatti",
+                    client1_tour: "Viaggio a Parigi",
+                    client1_review: "Viaggio incredibilmente organizzato! Tutto è stato pensato nei minimi dettagli: l'hotel è semplicemente meraviglioso, le escursioni sono molto interessanti e la guida è un vero professionista. Contatterò di nuovo!",
+                    client2_tour: "Vacanze alle Maldive",
+                    client2_review: "Sognavo una vacanza alle Maldive e King Hous Travel ha realizzato il mio sogno! Villa sull'acqua, viste incredibili, servizio perfetto. È stata la migliore vacanza della mia vita!",
+                    client3_tour: "Viaggio in Thailandia",
+                    client3_review: "Grazie mille per la meravigliosa organizzazione del tour! Tutto era al massimo livello: voli, trasferimenti, hotel, escursioni. Mi è piaciuta soprattutto la comunicazione con le guide locali che hanno raccontato molte cose interessanti.",
+                    client4_tour: "Viaggio a Dubai",
+                    client4_review: "Dubai ha superato tutte le mie aspettative! Un enorme ringraziamento al team di King Hous Travel per l'approccio professionale. Vorrei più tempo libero, ma in generale tutto è stato meraviglioso!",
+                    client5_tour: "Tour della Svizzera",
+                    client5_review: "La Svizzera è una fiaba! Grazie per il percorso perfettamente pianificato. Montagne, laghi, città pulite - tutto era incredibile. La salita al Matterhorn è stata particolarmente memorabile - è qualcosa di incredibile!",
+                    client6_tour: "Viaggio in Italia",
+                    client6_review: "Roma mi ha colpito con la sua storia e architettura! Grazie King Hous Travel per la meravigliosa organizzazione del tour. Le escursioni erano molto informative e la guida è un vero esperto di storia. Tornerò sicuramente!",
+                    blog_title: "Il nostro blog",
+                    blog_subtitle: "Consigli utili, storie interessanti e notizie dal mondo dei viaggi",
+                    blog1_title: "Top 10 luoghi da visitare in Europa questa estate",
+                    blog1_desc: "L'estate è il momento perfetto per viaggiare in Europa. Nel nostro articolo abbiamo raccolto i migliori posti da visitare questa stagione: dalle suggestive coste del Mediterraneo alle vette montuose delle Alpi...",
+                    blog2_title: "Come preparare una valigia per il viaggio perfetto",
+                    blog2_desc: "Un imballaggio corretto è la chiave per un viaggio confortevole. Nella nostra guida condivideremo i segreti su come preparare una valigia in modo efficiente, prendendo tutto il necessario e sovraccaricandosi...",
+                    blog3_title: "Le migliori spiagge del mondo per le tue vacanze",
+                    blog3_desc: "Sogni una vacanza balneare perfetta? Abbiamo preparato per te una selezione delle spiagge più belle del mondo: dalle spiagge di sabbia bianca delle Maldive alle coste esotiche dei Caraibi...",
+                    blog_read_more: "Leggi di più",
+                    contact_title: "Contattaci",
+                    contact_subtitle: "Siamo sempre felici di rispondere alle tue domande e aiutarti nell'organizzazione del tuo viaggio",
+                    contact_info_title: "Informazioni di contatto",
+                    contact_address: "Indirizzo",
+                    contact_phone: "Telefono",
+                    contact_email: "Email",
+                    contact_hours: "Orari di apertura",
+                    contact_schedule: "Lun-Ven: 9:00 - 18:00<br>Sab: 10:00 - 15:00",
+                    contact_form_title: "Invia un messaggio",
+                    form_name: "Il tuo nome",
+                    form_email: "Email",
+                    form_subject: "Oggetto",
+                    form_subject_placeholder: "Seleziona un argomento",
+                    form_subject_booking: "Prenotazione tour",
+                    form_subject_info: "Informazioni sui tour",
+                    form_subject_cooperation: "Collaborazione",
+                    form_subject_other: "Altro",
+                    form_message: "Messaggio",
+                    form_submit: "Invia messaggio",
+                    footer_about: "I migliori tour e viaggi indimenticabili per te. Rendiamo i tuoi sogni realtà dal 2008.",
+                    footer_links_title: "Link rapidi",
+                    footer_destinations_title: "Destinazioni popolari",
+                    destination_europe: "Europa",
+                    destination_asia: "Asia",
+                    destination_america: "America",
+                    destination_africa: "Africa",
+                    destination_australia: "Australia",
+                    destination_oceania: "Oceania",
+                    footer_newsletter_title: "Iscrizione alla newsletter",
+                    footer_newsletter_desc: "Iscriviti alla nostra newsletter per ricevere le ultime notizie e offerte speciali",
+                    footer_subscribe: "Iscriviti",
+                    footer_copyright: "&copy; 2023 King Hous Travel. Tutti i diritti riservati.",
+                    cart_title: "Il tuo carrello",
+                    cart_empty: "Il tuo carrello è vuoto",
+                    cart_total: "Totale:",
+                    cart_checkout: "Checkout",
+                    payment_title: "Pagamento",
+                    payment_card_number: "Numero carta",
+                    payment_expiry: "Data scadenza",
+                    payment_cvc: "CVC",
+                    payment_name: "Nome titolare",
+                    payment_email: "Email",
+                    payment_total: "Importo da pagare:",
+                    payment_button: "Paga",
+                    notification_cart_added: "Tour aggiunto al carrello",
+                    notification_cart_removed: "Tour rimosso dal carrello",
+                    notification_cart_empty: "Il tuo carrello è vuoto",
+                    notification_payment_success: "Pagamento riuscito! Grazie per il tuo ordine.",
+                    notification_form_sent: "Il tuo messaggio è stato inviato! Ti contatteremo a breve.",
+                    notification_fill_fields: "Per favore compila tutti i campi"
+                },
+                cz: {
+                    nav_home: "Domů",
+                    nav_services: "Služby",
+                    nav_tours: "Zájezdy",
+                    nav_clients: "Recenze",
+                    nav_blog: "Blog",
+                    nav_contact: "Kontakt",
+                    hero_title: "Objevte svět s námi",
+                    hero_subtitle: "Nezapomenutelné cesty, exkluzivní zájezdy a profesionální služby pro vaši dokonalou dovolenou",
+                    hero_button1: "Zobrazit zájezdy",
+                    hero_button2: "Kontaktujte nás",
+                    stat_tours: "Zájezdů",
+                    stat_countries: "Zemí",
+                    stat_clients: "Zákazníků",
+                    stat_experience: "Let zkušeností",
+                    services_title: "Naše služby",
+                    services_subtitle: "Nabízíme kompletní spektrum cestovních služeb pro váš komfort a spokojenost",
+                    service1_title: "Individuální zájezdy",
+                    service1_desc: "Vytvoříme pro vás jedinečnou trasu podle vašich přání a zájmů. Individuální přístup ke každému klientovi.",
+                    service1_button: "Více detailů",
+                    service2_title: "Rezervace hotelů",
+                    service2_desc: "Vybereme nejlepší možnosti ubytování jakékoli úrovně komfortu. Spolupracujeme pouze s ověřenými hotely a resorty.",
+                    service2_button: "Více detailů",
+                    service3_title: "Letecké lístky",
+                    service3_desc: "Zarezervujeme letenky za nejlepší ceny od spolehlivých leteckých společností. Pomůžeme vám s výběrem optimální trasy.",
+                    service3_button: "Více detailů",
+                    service4_title: "Vízová podpora",
+                    service4_desc: "Pomůžeme se zpracováním víz a potřebných dokumentů pro cestu. Kompletní podpora ve všech fázích.",
+                    service4_button: "Více detailů",
+                    service5_title: "Organizace dovolené",
+                    service5_desc: "Zorganizujeme kompletní balíček služeb pro vaši dovolenou: exkurze, zábava, transfery a další pro maximální komfort.",
+                    service5_button: "Více detailů",
+                    service6_title: "Pojištění",
+                    service6_desc: "Nabídneme nejlepší možnosti cestovního pojištění pro vaši bezpečnost během cesty. Pokrytí jakýchkoli rizik.",
+                    service6_button: "Více detailů",
+                    tours_title: "Populární zájezdy",
+                    tours_subtitle: "Vyberte si zájezd snů z naší kolekce nejlepších nabídek",
+                    tour1_badge: "Populární",
+                    tour1_title: "Romantická Paříž",
+                    tour1_location: "Francie, Paříž",
+                    tour1_desc: "Nezapomenutelný víkend ve městě lásky. Navštivte Eiffelovu věž, Louvre, procházejte se po Montmartreu a užívejte si francouzskou kuchyni.",
+                    tour1_duration: "3 dny / 2 noci",
+                    tour1_group: "2-4 osoby",
+                    tour2_badge: "Hit",
+                    tour2_title: "Tropický ráj",
+                    tour2_location: "Maledivy",
+                    tour2_desc: "Luxusní dovolená na bílých plážích Malediv. Vily nad vodou, potápění, lázeňské procedury a neuvěřitelné západy slunce.",
+                    tour2_duration: "7 dní / 6 nocí",
+                    tour2_group: "2 osoby",
+                    tour3_badge: "Doporučeno",
+                    tour3_title: "Východní pohádky",
+                    tour3_location: "SAE, Dubaj",
+                    tour3_desc: "Neuvěřitelná kombinace modernity a tradic. Mrakodrapy, luxusní nákupní centra, pouštní safari a exkluzivní nakupování.",
+                    tour3_duration: "5 dní / 4 noci",
+                    tour3_group: "2-6 osob",
+                    tour4_badge: "Dovolená",
+                    tour4_title: "Krystalové vody",
+                    tour4_location: "Thajsko",
+                    tour4_desc: "Exotická dovolená na ostrovech Thajska. Bangkok, Phuket, Samui - nejlepší pláže, thajské masáže a nezapomenutelná kuchyně.",
+                    tour4_duration: "10 dní / 9 nocí",
+                    tour4_group: "2-4 osoby",
+                    tour5_badge: "Příroda",
+                    tour5_title: "Alpské dobrodružství",
+                    tour5_location: "Švýcarsko",
+                    tour5_desc: "Neuvěřitelné horské krajiny, čistý vzduch a lyžařská střediska. Curych, Ženeva, Interlaken a výstup na Matterhorn.",
+                    tour5_duration: "8 dní / 7 nocí",
+                    tour5_group: "2-6 osob",
+                    tour6_badge: "Kultura",
+                    tour6_title: "Starověký svět",
+                    tour6_location: "Itálie, Řím",
+                    tour6_desc: "Cesta do srdce impéria. Koloseum, Vatikán, Fontána di Trevi, Sixtinská kaple a ta nejlepší italská kuchyně.",
+                    tour6_duration: "6 dní / 5 nocí",
+                    tour6_group: "2-8 osob",
+                    add_to_cart: "Přidat",
+                    clients_title: "Recenze zákazníků",
+                    clients_subtitle: "Zjistěte, co o nás říkají naši spokojení zákazníci",
+                    client1_tour: "Cesta do Paříže",
+                    client1_review: "Neuvěřitelně organizovaná cesta! Vše bylo promyšleno do nejmenších detailů: hotel je jednoduše úžasný, exkurze jsou velmi zajímavé a průvodce je skutečný profesionál. Určitě se znovu ozvu!",
+                    client2_tour: "Dovolená na Maledivách",
+                    client2_review: "Snil jsem o dovolené na Maledivách a King Hous Travel mi splnil sen! Vila nad vodou, neuvěřitelné výhledy, dokonalý servis. To byla nejlepší dovolená v mém životě!",
+                    client3_tour: "Cesta do Thajska",
+                    client3_review: "Velmi děkuji za skvělou organizaci zájezdu! Vše bylo na nejvyšší úrovni: lety, transfery, hotely, exkurze. Zvláště se mi líbila komunikace s místními průvodci, kteří vyprávěli mnoho zajímavých věcí.",
+                    client4_tour: "Cesta do Dubaje",
+                    client4_review: "Dubaj překonal všechna má očekávání! Obrovský dík týmu King Hous Travel za profesionální přístup. Chtěl bych více volného času, ale celkově bylo vše skvělé!",
+                    client5_tour: "Zájezd po Švýcarsku",
+                    client5_review: "Švýcarsko je pohádka! Děkuji za dokonale naplánovanou trasu. Hory, jezera, čistá města - vše bylo neuvěřitelné. Zejména mě zaujal výstup na Matterhorn - to je něco neuvěřitelného!",
+                    client6_tour: "Cesta do Itálie",
+                    client6_review: "Řím mě ohromil svou historií a architekturou! Děkuji King Hous Travel za skvělou organizaci zájezdu. Exkurze byly velmi poučné a průvodce je skutečný znalec historie. Určitě se vrátím!",
+                    blog_title: "Náš blog",
+                    blog_subtitle: "Užitečné tipy, zajímavé příběhy a novinky ze světa cestování",
+                    blog1_title: "Top 10 míst k návštěvě v Evropě toto léto",
+                    blog1_desc: "Léto je ideální čas pro cestování po Evropě. V našem článku jsme shromáždili nejlepší místa, která stojí za návštěvu této sezóny: od malebných pobřeží Středozemního moře po horské vrcholky Alp...",
+                    blog2_title: "Jak sbalit kufr na dokonalou cestu",
+                    blog2_desc: "Správné balení je klíčem k pohodlné cestě. V naší příručce se podělíme o tajemství, jak efektivně sbalit kufr, vzít si vše potřebné a nepřetěžovat se...",
+                    blog3_title: "Nejlepší pláže světa pro vaši dovolenou",
+                    blog3_desc: "Sníte o dokonalé plážové dovolené? Připravili jsme pro vás výběr nejkrásnějších pláží světa: od bílých pláží Malediv po exotická pobřeží Karibiku...",
+                    blog_read_more: "Číst více",
+                    contact_title: "Kontaktujte nás",
+                    contact_subtitle: "Vždy jsme rádi, když odpovíme na vaše otázky a pomůžeme s organizací vaší cesty",
+                    contact_info_title: "Kontaktní informace",
+                    contact_address: "Adresa",
+                    contact_phone: "Telefon",
+                    contact_email: "Email",
+                    contact_hours: "Otevírací doba",
+                    contact_schedule: "Po-Pá: 9:00 - 18:00<br>So: 10:00 - 15:00",
+                    contact_form_title: "Pošlete nám zprávu",
+                    form_name: "Vaše jméno",
+                    form_email: "Email",
+                    form_subject: "Předmět",
+                    form_subject_placeholder: "Vyberte téma",
+                    form_subject_booking: "Rezervace zájezdu",
+                    form_subject_info: "Informace o zájezdech",
+                    form_subject_cooperation: "Spolupráce",
+                    form_subject_other: "Jiné",
+                    form_message: "Zpráva",
+                    form_submit: "Odeslat zprávu",
+                    footer_about: "Nejlepší zájezdy a nezapomenutelné cesty pro vás. Vaše sny realizujeme od roku 2008.",
+                    footer_links_title: "Rychlé odkazy",
+                    footer_destinations_title: "Populární destinace",
+                    destination_europe: "Evropa",
+                    destination_asia: "Asie",
+                    destination_america: "Amerika",
+                    destination_africa: "Afrika",
+                    destination_australia: "Austrálie",
+                    destination_oceania: "Oceánie",
+                    footer_newsletter_title: "Přihlášení k odběru novinek",
+                    footer_newsletter_desc: "Přihlaste se k odběru našeho zpravodaje, abyste dostávali nejnovější zprávy a speciální nabídky",
+                    footer_subscribe: "Přihlásit se",
+                    footer_copyright: "&copy; 2023 King Hous Travel. Všechna práva vyhrazena.",
+                    cart_title: "Váš košík",
+                    cart_empty: "Váš košík je prázdný",
+                    cart_total: "Celkem:",
+                    cart_checkout: "Pokladna",
+                    payment_title: "Platba",
+                    payment_card_number: "Číslo karty",
+                    payment_expiry: "Datum expirace",
+                    payment_cvc: "CVC",
+                    payment_name: "Jméno držitele",
+                    payment_email: "Email",
+                    payment_total: "Částka k úhradě:",
+                    payment_button: "Zaplatit",
+                    notification_cart_added: "Zájezd přidán do košíku",
+                    notification_cart_removed: "Zájezd odstraněn z košíku",
+                    notification_cart_empty: "Váš košík je prázdný",
+                    notification_payment_success: "Platba úspěšná! Děkujeme za vaši objednávku.",
+                    notification_form_sent: "Vaše zpráva byla odeslána! Brzy vás kontaktujeme.",
+                    notification_fill_fields: "Prosím vyplňte všechna pole"
+                }
+            };
+
+            // Мобільне меню
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            hamburger.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+            });
+            
+            // Закриття мобільного меню при кліку на посилання
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+            
+            // Перемикач мов
+            const languageButtons = document.querySelectorAll('.language-btn');
+            const html = document.documentElement;
+            
+            // Завантаження збереженої мови
+            const savedLanguage = localStorage.getItem('language') || 'uk';
+            html.setAttribute('lang', savedLanguage);
+            document.querySelector(`.language-btn[data-lang="${savedLanguage}"]`).classList.add('active');
+            
+            languageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // Оновлення активної мови
+                    languageButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Збереження вибраної мови
+                    localStorage.setItem('language', lang);
+                    html.setAttribute('lang', lang);
+                    
+                    // Оновлення текстів на сторінці
+                    updateLanguage(lang);
+                });
+            });
+            
+            // Функція оновлення мови
+            function updateLanguage(lang) {
+                const elements = document.querySelectorAll('[data-translate]');
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (translations[lang] && translations[lang][key]) {
+                        element.textContent = translations[lang][key];
+                    }
+                });
+                
+                // Оновлення атрибутів placeholder
+                const placeholders = document.querySelectorAll('[data-translate-placeholder]');
+                placeholders.forEach(element => {
+                    const key = element.getAttribute('data-translate-placeholder');
+                    if (translations[lang] && translations[lang][key]) {
+                        element.placeholder = translations[lang][key];
+                    }
+                });
+            }
+            
+            // Ініціалізація мови при завантаженні
+            updateLanguage(savedLanguage);
+            
+            // Кнопка музики
+            const musicControl = document.getElementById('music-control');
+            const backgroundMusic = document.getElementById('background-music');
+            let isMusicPlaying = false;
+            
+            musicControl.addEventListener('click', function() {
+                if (isMusicPlaying) {
+                    backgroundMusic.pause();
+                    musicControl.classList.remove('active');
+                } else {
+                    backgroundMusic.play();
+                    musicControl.classList.add('active');
+                }
+                isMusicPlaying = !isMusicPlaying;
+            });
+            
+            // Корзина
+            const cartIcon = document.getElementById('cart-icon');
+            const cartContainer = document.getElementById('cart-container');
+            const cartClose = document.getElementById('cart-close');
+            const cartItems = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            const cartCheckout = document.getElementById('cart-checkout');
+            
+            // Модальне вікно оплати
+            const paymentModal = document.getElementById('payment-modal');
+            const paymentClose = document.getElementById('payment-close');
+            const paymentForm = document.getElementById('payment-form');
+            const paymentButton = document.getElementById('payment-button');
+            const paymentTotal = document.getElementById('payment-total');
+            
+            // Сповіщення
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notification-message');
+            const notificationClose = document.getElementById('notification-close');
+            
+            // Дані корзини
+            let cart = [];
+            
+            // Відкриття/закриття корзини
+            cartIcon.addEventListener('click', function() {
+                cartContainer.classList.toggle('active');
+            });
+            
+            cartClose.addEventListener('click', function() {
+                cartContainer.classList.remove('active');
+            });
+            
+            // Додавання товару в корзину
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tourId = this.getAttribute('data-tour-id');
+                    const tourName = this.getAttribute('data-tour-name');
+                    const tourPrice = parseInt(this.getAttribute('data-tour-price'));
+                    
+                    // Перевірка, чи товар вже в корзині
+                    const existingItem = cart.find(item => item.id === tourId);
+                    
+                    if (existingItem) {
+                        showNotification(translations[html.getAttribute('lang')].notification_cart_added, 'info');
+                    } else {
+                        cart.push({
+                            id: tourId,
+                            name: tourName,
+                            price: tourPrice
+                        });
+                        
+                        updateCart();
+                        showNotification(translations[html.getAttribute('lang')].notification_cart_added, 'success');
+                    }
+                });
+            });
+            
+            // Оновлення корзини
+            function updateCart() {
+                // Очищення корзини
+                cartItems.innerHTML = '';
+                
+                if (cart.length === 0) {
+                    cartItems.innerHTML = `
+                        <div class="cart-empty">
+                            <i class="fas fa-shopping-cart"></i>
+                            <p>${translations[html.getAttribute('lang')].cart_empty}</p>
+                        </div>
+                    `;
+                } else {
+                    cart.forEach(item => {
+                        const cartItem = document.createElement('div');
+                        cartItem.className = 'cart-item';
+                        cartItem.innerHTML = `
+                            <div class="cart-item-image" style="background-image: url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')"></div>
+                            <div class="cart-item-details">
+                                <div class="cart-item-title">${item.name}</div>
+                                <div class="cart-item-price">${item.price.toLocaleString('uk-UA')} грн</div>
+                                <button class="cart-item-remove" data-id="${item.id}">${translations[html.getAttribute('lang')].notification_cart_removed}</button>
+                            </div>
+                        `;
+                        cartItems.appendChild(cartItem);
+                    });
+                    
+                    // Додавання обробників для кнопок видалення
+                    const removeButtons = cartItems.querySelectorAll('.cart-item-remove');
+                    removeButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const itemId = this.getAttribute('data-id');
+                            cart = cart.filter(item => item.id !== itemId);
+                            updateCart();
+                            showNotification(translations[html.getAttribute('lang')].notification_cart_removed, 'info');
+                        });
+                    });
+                }
+                
+                // Оновлення лічильника та суми
+                cartCount.textContent = cart.length;
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                cartTotal.textContent = `${total.toLocaleString('uk-UA')} грн`;
+            }
+            
+            // Оплата
+            cartCheckout.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    showNotification(translations[html.getAttribute('lang')].notification_cart_empty, 'error');
+                    return;
+                }
+                
+                cartContainer.classList.remove('active');
+                paymentModal.classList.add('active');
+                
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                paymentTotal.textContent = `${total.toLocaleString('uk-UA')} грн`;
+            });
+            
+            paymentClose.addEventListener('click', function() {
+                paymentModal.classList.remove('active');
+            });
+            
+            // Форматування номера картки
+            const cardNumberInput = document.getElementById('card-number');
+            cardNumberInput.addEventListener('input', function() {
+                let value = this.value.replace(/\s/g, '');
+                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                this.value = formattedValue;
+            });
+            
+            // Форматування терміну дії картки
+            const cardExpiryInput = document.getElementById('card-expiry');
+            cardExpiryInput.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                this.value = value;
+            });
+            
+            // Обробка оплати
+            paymentButton.addEventListener('click', function() {
+                const cardNumber = document.getElementById('card-number').value;
+                const cardExpiry = document.getElementById('card-expiry').value;
+                const cardCvc = document.getElementById('card-cvc').value;
+                const cardName = document.getElementById('card-name').value;
+                const cardEmail = document.getElementById('card-email').value;
+                
+                // Проста валідація
+                if (!cardNumber || !cardExpiry || !cardCvc || !cardName || !cardEmail) {
+                    showNotification(translations[html.getAttribute('lang')].notification_fill_fields, 'error');
+                    return;
+                }
+                
+                // Симуляція процесу оплати
+                paymentButton.disabled = true;
+                paymentButton.textContent = 'Processing...';
+                
+                setTimeout(() => {
+                    paymentModal.classList.remove('active');
+                    showNotification(translations[html.getAttribute('lang')].notification_payment_success, 'success');
+                    
+                    // Очищення корзини
+                    cart = [];
+                    updateCart();
+                    
+                    // Очищення форми
+                    paymentForm.reset();
+                    paymentButton.disabled = false;
+                    paymentButton.textContent = translations[html.getAttribute('lang')].payment_button;
+                }, 2000);
+            });
+            
+            // Форма контакту
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // Симуляція відправки форми
+                showNotification(translations[html.getAttribute('lang')].notification_form_sent, 'success');
+                
+                // Очищення форми
+                contactForm.reset();
+            });
+            
+            // Функція показу сповіщень
+            function showNotification(message, type = 'success') {
+                notificationMessage.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            }
+            
+            // Закриття сповіщення
+            notificationClose.addEventListener('click', function() {
+                notification.classList.remove('show');
+            });
+            
+            // Плавна прокрутка до секцій
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Анімація при прокрутці
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Додавання анімації для карток
+            document.querySelectorAll('.service-card, .tour-card, .client-card, .blog-card').forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
